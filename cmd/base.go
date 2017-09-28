@@ -2,8 +2,7 @@ package main
 
 import (
 	"flag"
-
-	"github.com/VG-Tech-Dojo/treasure2017/mid/sakuttochan/nogiMemorize"
+	"github.com/sakuttochan/NogiMemorize"
 )
 
 func main() {

@@ -7,3 +7,5 @@ public/js/bundle.js
 Godeps/_workspace
 !.eslintrc.js
 !.editorconfig
+.env
+bindata.go

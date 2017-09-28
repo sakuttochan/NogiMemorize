@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/VG-Tech-Dojo/treasure2017/mid/sakuttochan/nogiMemorize/controller"
-	"github.com/VG-Tech-Dojo/treasure2017/mid/sakuttochan/nogiMemorize/db"
+	"github.com/sakuttochan/NogiMemorize/controller"
+	"github.com/sakuttochan/NogiMemorize/db"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/context"

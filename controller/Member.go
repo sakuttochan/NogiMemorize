@@ -3,13 +3,15 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
-	"github.com/VG-Tech-Dojo/treasure2017/mid/sakuttochan/nogiMemorize/model"
+	"github.com/sakuttochan/NogiMemorize/model"
 	"github.com/jmoiron/sqlx"
 	"time"
 	"fmt"
 	"math/rand"
 	"io/ioutil"
 	"log"
+	"github.com/joho/godotenv"
+	"os"
 )
 
 type Member struct {
@@ -33,6 +35,14 @@ type Url struct {
 	} `json:"page"`
 }
 
+func Env_load() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+}
+
+
 func (t *Member) GetMemberByRandom(w http.ResponseWriter, r *http.Request) error {
 	rand.Seed(time.Now().UnixNano())
 	randomId := rand.Intn(45)
@@ -50,7 +60,8 @@ func (t *Member) GetMemberByRandom(w http.ResponseWriter, r *http.Request) error
 }
 
 func GetMemberPic(memberName string) (string, error) {
-	accessToken := "hoge"
+	Env_load()
+	accessToken := os.Getenv("TOKEN")
 	board := "sakuttochan/" + memberName
 	resp, err := http.Get("https://api.pinterest.com/v1/boards/" + board + "/pins/?access_token=" + accessToken + "&fields=image")
 	if err != nil {
