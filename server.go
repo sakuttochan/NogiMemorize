@@ -69,10 +69,8 @@ func (s *Server) Route() *mux.Router {
 
 	member := &controller.Member{DB: s.dbx}
 
-	// TODO ng?
 	router.Handle("/api/member", handler(member.GetMemberByRandom)).Methods("GET")
 
-	// TODO return index.html
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "public/index.html")
 	})

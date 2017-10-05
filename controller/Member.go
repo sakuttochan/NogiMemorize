@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"math/rand"
 	"io/ioutil"
-	"log"
 	"github.com/joho/godotenv"
 	"os"
 )
@@ -38,7 +37,8 @@ type Url struct {
 func Env_load() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println("cannot load .env file")
+		fmt.Printf("%#v", err)
 	}
 }
 
@@ -65,7 +65,7 @@ func GetMemberPic(memberName string) (string, error) {
 	board := "sakuttochan/" + memberName
 	resp, err := http.Get("https://api.pinterest.com/v1/boards/" + board + "/pins/?access_token=" + accessToken + "&fields=image")
 	if err != nil {
-		fmt.Println("apiエラーです")
+		fmt.Println("something went wrong when access pintarest api")
 		fmt.Printf("%#v", err)
 	}
 
@@ -73,7 +73,7 @@ func GetMemberPic(memberName string) (string, error) {
 	bytes := execute(resp)
 	var url Url
 	if err := json.Unmarshal(bytes, &url); err != nil {
-		log.Fatal(err)
+		fmt.Printf("%#v", err)
 	}
 	var urlList []string
 	for i := 0; i < len(url.Data); i++ {
@@ -88,7 +88,7 @@ func GetMemberPic(memberName string) (string, error) {
 func execute(response *http.Response) []byte {
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("%#v", err)
 	}
 	return body
 }

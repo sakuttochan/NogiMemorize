@@ -10,10 +10,8 @@ import (
 	"gopkg.in/yaml.v1"
 )
 
-// Configsは環境ごとの設定情報をもつ
 type Configs map[string]*Config
 
-// Openは指定された環境についてDBに接続します。
 func (cs Configs) Open(env string) (*sqlx.DB, error) {
 	config, ok := cs[env]
 	if !ok {
@@ -22,23 +20,18 @@ func (cs Configs) Open(env string) (*sqlx.DB, error) {
 	return config.Open()
 }
 
-// Configはsql-migrateの設定ファイルと同じ形式を想定している
 type Config struct {
 	Datasource string `yaml:"datasource"`
 }
 
-// DSNは設定されているDSNを返します
 func (c *Config) DSN() string {
 	return c.Datasource
 }
 
-// OpenはConfigで指定されている接続先に接続する。
-// MySQL固定
 func (c *Config) Open() (*sqlx.DB, error) {
 	return sqlx.Open("mysql", c.DSN())
 }
 
-// NewConfigsFromFileはConfigから設定を読み取る
 func NewConfigsFromFile(path string) (Configs, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -48,7 +41,6 @@ func NewConfigsFromFile(path string) (Configs, error) {
 	return NewConfigs(f)
 }
 
-// NewConfigsはio.ReaderからDB用設定を読み取る
 func NewConfigs(r io.Reader) (Configs, error) {
 	b, err := ioutil.ReadAll(r)
 	if err != nil {
