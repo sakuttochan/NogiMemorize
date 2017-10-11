@@ -44,11 +44,11 @@ export default class NogiBox extends React.Component {
     handleAnswerClick() {
         this.checkAnswer();
         this.setState({mode: this.CHECKANSWER});
-        console.log(this.state.inputName);
-        console.log(this.state.inputYear);
-        console.log(this.state.inputMonth);
-        console.log(this.state.inputDay);
-        console.log(this.state.inputHeight);
+        //console.log(this.state.inputName);
+        //console.log(this.state.inputYear);
+        //console.log(this.state.inputMonth);
+        //console.log(this.state.inputDay);
+        //console.log(this.state.inputHeight);
     }
 
     handleResultClick() {
@@ -81,21 +81,23 @@ export default class NogiBox extends React.Component {
     checkAnswer() {
         var month;
         var day;
+        var nameState = false;
+        var heightState = false;
+        var birthdayState = false;
         this.setState({nameState: false});
         this.setState({birthdayState: false});
         this.setState({heightState: false});
         if (this.state.inputName == this.state.memberName) {
             this.setState({nameState: true});
-
+            nameState = true;
         }
         if (this.state.inputHeight == this.state.memberHeight) {
             this.setState({heightState: true})
-
+            heightState = true;
         }
         if (this.state.inputDay.length < 2) {
             day = '0' + this.state.inputDay;
             this.setState({inputDay: day})
-
         } else {
             day = this.state.inputDay;
         }
@@ -108,10 +110,10 @@ export default class NogiBox extends React.Component {
         var birthday = this.state.inputYear + month + day;
         if (birthday == this.state.memberBirthday) {
             this.setState({birthdayState: true});
+            birthdayState = true;
         }
-        if (this.state.nameState && this.state.birthdayState && this.state.heightState) {
-            this.setState({result: this.state.result + 1})
-            console.log(this.state.result);
+        if (nameState && birthdayState && heightState) {
+            this.setState({result: this.state.result + 1});
         }
         month = '';
         day = '';
